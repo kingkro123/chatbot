@@ -1,6 +1,16 @@
 import streamlit as st
 from openai import OpenAI
 
+
+params = st.experimental_get_query_params()
+#params = st.query_params
+token = params.get("token", [None])[0]
+
+if token != "mysecret":
+    st.error("access denied")
+    st.stop()
+
+
 # Show title and description.
 st.title("💬 Chatbot")
 st.write(
@@ -17,6 +27,7 @@ if not openai_api_key:
     st.info("Please add your OpenAI API key to continue.", icon="🗝️")
 else:
 
+   
     # Create an OpenAI client.
     client = OpenAI(api_key=openai_api_key)
 
